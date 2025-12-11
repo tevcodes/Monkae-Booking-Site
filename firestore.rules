@@ -1,0 +1,60 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // AUTHENTICATION CHECK
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    // =========================================================
+    // 1. SALON SETTINGS (Logo, Services, Hours)
+    // =========================================================
+    
+    // 🛑 THIS WAS MISSING: Allow public read of the main salon doc
+    match /salons/{salonId} {
+      allow read: if true;  // Public can see Logo/Menu
+      allow write: if false; // Only you can change this in Console
+    }
+
+    // =========================================================
+    // 2. SUB-COLLECTIONS (Bookings & Mail)
+    // =========================================================
+    
+    match /salons/{salonId}/bookings/{bookingId} {
+      allow read: if true;       // Public read (availability check)
+      allow create: if true;     // Public create (booking)
+      allow update, delete: if isAuthenticated(); // Admin only
+    }
+
+    match /salons/{salonId}/mail/{mailId} {
+      allow create: if true;     // Trigger email
+      allow read, update, delete: if false;
+    }
+
+    match /salons/{salonId}/config/{configId} {
+       allow read: if isAuthenticated(); // Admin only (Reports config)
+       allow write: if false;
+    }
+
+    // =========================================================
+    // 3. LEGACY / DEFAULT
+    // =========================================================
+    match /bookings/{bookingId} {
+      allow read: if true;
+      allow create: if true;
+      allow update, delete: if isAuthenticated();
+    }
+    match /mail/{mailId} {
+      allow create: if true;
+      allow read, update, delete: if false;
+    }
+    match /admin_config/{configId} {
+      allow read: if isAuthenticated();
+    }
+
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

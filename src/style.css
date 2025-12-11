@@ -1,0 +1,1211 @@
+/* src/style.css - New Styling for MIDA Design */
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap');
+
+:root {
+  --bg: #141414; /* Very dark background */
+  --card-bg: #1a1a1a; /* Dark card background */
+  --accent: #828282; 
+  --text-light: #f5f5f5;
+  --text-muted: #888888;
+  --text-header: #ffffff;
+  --success: #5dc141ac; 
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+/* GLOBAL BODY SETTINGS */
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--bg);
+  color: var(--text-light);
+  font-family: "Poppins", sans-serif;
+  min-height: 100vh;
+  height: auto;
+  overflow-y: auto; 
+  overflow-x: hidden;
+  display: block; 
+}
+
+/* 🔒 ADMIN LOCK: Only lock scrolling if this wrapper exists */
+body:has(.admin-dashboard-wrapper) {
+    overflow: hidden !important;
+    height: 100vh !important;
+    width: 100vw !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.admin-logo {
+  width: 150px;
+  height: auto;
+  margin-bottom: 10px;
+  filter: drop-shadow(0 0 4px rgba(0, 0, 0, 0.2));
+  transition: transform 0.3s ease, filter 0.3s ease;
+  filter: brightness(0) invert(1);
+}
+
+.admin-logo:hover {
+  transform: scale(1.05);
+  filter: drop-shadow(0 0 8px var(--accent));
+}
+
+
+.booking-page {
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem; 
+  padding: 0 1rem;
+}
+
+/* --- Card Styles --- */
+.card {
+  background-color: var(--card-bg);
+  padding: 1.5rem;
+  border-radius: 1rem;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+  margin: 5px;
+}
+
+h1 {
+  font-size: 2rem;
+  font-weight: 600;
+  color: var(--text-header);
+  margin-bottom: 0.5rem;
+  letter-spacing: 2px;
+}
+
+h2 {
+  font-size: 1.5rem;
+  font-weight: 500;
+  margin-bottom: 1rem;
+  color: var(--text-header);
+}
+
+h3 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: var(--text-header);
+}
+
+h1, h2, h3 {
+ font-family: "Orbitron", sans-serif;
+}
+
+.subtitle {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.header-card {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  gap: 1rem;
+  width: 100%; /* Ensures grid takes full width inside desktop flex container */
+}
+
+/* Base Card Style */
+.service-card {
+  background-color: #242424;
+  padding: 1rem 0.5rem;
+  border-radius: 0.5rem;
+  text-align: center;
+  cursor: pointer;
+  border: 2px solid transparent; /* Prevents layout jump */
+  transition: all 0.2s ease-in-out;
+  position: relative; /* Helps with z-index if needed */
+}
+
+/* HOVER State (Desktop Only) */
+/* We make this slightly lighter, but keep it distinct from selected */
+.service-card:not(.selected):hover {
+  background-color: #333333; 
+  border-color: #363636; 
+  transform: translateY(-2px);
+}
+
+.service-card.selected {
+  border-color: var(--accent) !important;
+  background-color: #303030 !important; 
+  box-shadow: 0 0 15px rgba(105, 105, 105, 0.5) !important;
+  transform: scale(1.02) !important; 
+}
+
+/* Icon & Text Highlighting */
+.service-card.selected .service-icon,
+.service-card.selected .service-name {
+  color: #ffffffbe !important;
+  text-shadow: 0 0 10px var(--accent); /* Stronger text glow */
+}
+
+.service-icon {
+  font-size: 1.5rem;
+  display: block;
+  margin-bottom: 0.3rem;
+  color: var(--accent);
+  transition: color 0.2s ease;
+}
+
+.service-name {
+  font-weight: 500;
+  font-size: 0.9rem;
+  transition: color 0.2s ease;
+}
+
+.service-duration {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+/* --- Time Selection --- */
+.time-selection {
+  display: flex;
+  gap: 1rem;
+}
+
+.day-selector {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    flex-basis: 30%; /* Narrow column for days */
+}
+
+.day-button {
+    background-color: #242424;
+    color: var(--text-light);
+    border: 1px solid #333;
+    padding: 0.5rem 0.2rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.2s;
+}
+
+.day-button:hover {
+    background-color: #333333;
+    border-color: var(--accent);
+}
+
+.day-button.selected {
+  background: linear-gradient(135deg, #6d6c6c, #414141);
+  color: var(--text-header);
+  padding: 0.6rem 1.2rem;
+  border-radius: 12px;
+  font-weight: 600;
+  border: 1px solid var(--accent);
+  cursor: pointer;
+  transition: .2s ease;
+
+}
+
+
+.time-slots-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.5rem;
+  flex-grow: 1; /* Take up remaining space */
+}
+
+.time-slot-button {
+    background-color: #242424;
+    color: var(--text-light);
+    border: 1px solid #333;
+    padding: 0.6rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.2s;
+}
+
+.time-slot-button:hover {
+    background-color: #333333;
+    border-color: var(--accent);
+}
+
+.time-slot-button.selected {
+   background: linear-gradient(135deg, #6d6c6c, #414141);
+  color: var(--text-header);
+  padding: 0.6rem 1.2rem;
+  border-radius: 12px;
+  font-weight: 600;
+  border: 1px solid var(--accent);
+  cursor: pointer;
+  transition: .2s ease;
+
+}
+
+/* --- Final Step & Input --- */
+.final-step-card {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+#email-input {
+    background-color: #242424;
+    color: var(--text-light);
+    border: 1px solid #333;
+    padding: 0.75rem 1rem;
+    border-radius: 0.5rem;
+    outline: none;
+    font-size: 1rem;
+}
+
+#name-input {
+    background-color: #242424;
+    color: var(--text-light);
+    border: 1px solid #333;
+    padding: 0.75rem 1rem;
+    border-radius: 0.5rem;
+    outline: none;
+    font-size: 1rem;
+}
+
+#staff-select {
+        background-color: #242424;
+    color: var(--text-light);
+    border: 1px solid #333;
+    padding: 0.75rem 1rem;
+    border-radius: 0.5rem;
+    outline: none;
+    font-size: 1rem;
+}
+
+label {
+    font-family: "Orbitron", sans-serif;
+}
+
+#name-input:focus {
+    border-color: var(--accent);
+}
+
+.cta-button {
+   background: linear-gradient(135deg, #444, #222);
+  color: var(--text-header);
+  padding: 0.6rem 1.2rem;
+  border-radius: 12px;
+  font-weight: 600;
+  border: 1px solid var(--accent);
+  cursor: pointer;
+  transition: .2s ease;
+  font-family: "Orbitron", sans-serif;
+}
+
+.cta-button:hover {
+  opacity: 0.6;
+  color: var(--text-header);
+}
+
+/* --- Success Message --- */
+.success-card {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+
+.material-symbols-outlined {
+  font-variation-settings:
+  'FILL' 0,
+  'wght' 300,
+  'GRAD' 0,
+  'opsz' 48;
+  /* Ensure the icon is vertically aligned */
+  vertical-align: middle;
+}
+
+/* --- CUSTOM ALERT MODAL: FINAL FIX --- */
+
+/* 1. Base Hidden State (Apply to modal container) */
+#custom-alert-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    
+    /* Overlay and Centering */
+    background: rgba(0, 0, 0, 0.85); 
+    display: flex; 
+    justify-content: center;
+    align-items: center;
+    
+    /* Animation & Visibility Control */
+    z-index: 99999;
+    opacity: 0;
+    pointer-events: none; /* Prevents clicking when invisible */
+    transition: opacity 0.3s ease;
+}
+
+/* 2. Visible State (Toggled by JavaScript) */
+#custom-alert-modal.visible {
+    opacity: 1;
+    pointer-events: all; /* Allows clicking when visible */
+}
+
+/* 3. The Inner Box (The Content) */
+.alert-box {
+    background: var(--card-bg);
+    border: 1px solid var(--accent);
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 0 30px rgba(0,0,0,0.8);
+    
+    /* Animation for the box appearing */
+    transform: scale(0.9); 
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+#custom-alert-modal.visible .alert-box {
+    transform: scale(1);
+}
+
+
+.modal-open {
+    overflow: hidden !important; 
+    padding-right: 15px; 
+}
+
+.alert-btn {
+    background: var(--accent);
+    color: var(--bg); 
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px; /* Clean, modern corners */
+    
+    font-family: "Orbitron", sans-serif; /* Use Orbitron for the action button */
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: all 0.2s ease;
+}
+
+.alert-btn:hover {
+    background: var(--text-light); /* Light up button on hover */
+    color: var(--bg);
+}
+
+/* --- Desktop Layout (Media Query) --- */
+@media (min-width: 900px) {
+    /* 1. Global Page Layout for Desktop */
+    body {
+        /* Allow the content to fill more space horizontally */
+        padding: 4rem 0; 
+    }
+    
+    .booking-page {
+        /* Increase the max width for desktop */
+        max-width: 1000px; 
+        gap: 3rem; 
+    }
+
+    /* 2. Side-by-Side Arrangement for Steps */
+    /* Use a dedicated container for the two main steps */
+    .steps-container {
+        display: flex;
+        gap: 2rem;
+        align-items: flex-start; /* Align steps to the top */
+    }
+
+    /* Target the Service and Time Sections to live inside the new container */
+    .booking-page > form > .card:nth-child(1),
+    .booking-page > form > .card:nth-child(2) {
+        flex: 1; /* Make both cards take equal width */
+    }
+    
+    /* 3. Minor Adjustments */
+    .day-selector {
+        /* Increase day selector space on desktop */
+        flex-basis: 40%;
+    }
+
+    .time-slots-grid {
+        /* Allow three columns on wide screens */
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+
+/* --- Bookings List --- */
+.bookings-list-card {
+    grid-column: 2 / 3; /* Places it next to PIN card */
+    min-height: 400px;
+}
+
+#bookings-list {
+    list-style: none;
+    padding: 0;
+    margin: 1rem 0;
+}
+
+.booking-item {
+    display: flex;
+    align-items: center;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid #2e2e2e;
+}
+
+.booking-item:last-child {
+    border-bottom: none;
+}
+
+.booking-time {
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: var(--accent);
+    flex-basis: 25%;
+}
+
+.booking-details {
+    flex-grow: 1;
+}
+
+.booking-client {
+    font-weight: 500;
+}
+
+.booking-service {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}
+
+.booking-actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.confirm-btn, .cancel-btn {
+    padding: 0.4rem 0.6rem;
+    border: none;
+    border-radius: 0.3rem;
+    cursor: pointer;
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+.confirm-btn {
+    background-color: var(--accent);
+    color: var(--bg);
+}
+
+.cancel-btn {
+    background-color: #444;
+    color: var(--text-light);
+}
+
+/* --- Detail Card and Calendar --- */
+.booking-detail-card, .calendar-card {
+    grid-column: span 1; /* These take up one column each */
+}
+
+/* --- Modal and UX Styles --- */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.85);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.success-card {
+  position: relative; /* Allows positioning the close button absolutely */
+  min-width: 300px;
+  padding: 2rem;
+  display: flex; /* Makes alignment easier */
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.close-modal-btn {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    font-size: 1.8rem;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.close-modal-btn:hover {
+    color: var(--accent);
+}
+
+.secondary-btn {
+    background-color: #444; /* Dark gray */
+    color: var(--text-light);
+    border: none;
+    padding: 0.85rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: background-color 0.2s;
+}
+
+.secondary-btn:hover {
+    background-color: #555;
+}
+
+
+/* --- Privacy Consent Styling --- */
+.privacy-consent {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+    font-size: 0.85rem;
+    text-align: left;
+    color: var(--text-muted);
+}
+
+.privacy-consent input[type="checkbox"] {
+    margin-top: 5px;
+    flex-shrink: 0;
+    cursor: pointer;
+}
+
+.privacy-consent a {
+    color: var(--accent);
+    text-decoration: underline;
+}
+
+/* --- ADMIN DASHBOARD STYLES POLISH --- */
+
+.admin-dashboard-wrapper {
+    /* Ensures the login screen is centered vertically */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100%;
+    padding: 2rem;
+    box-sizing: border-box;   
+}
+
+.admin-dashboard-grid {
+    width: 100%;
+    max-width: 1000px; /* Max width for dashboard */
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+}
+
+.pin-entry-card {
+    /* Centers the PIN card for a clean login look */
+    grid-column: 1 / 3; 
+    max-width: 380px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+}
+
+.error-message {
+    color: #dc3545; /* Red color for login errors */
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+}
+
+/* PIN Display and Input */
+.pin-input-display {
+    display: flex;
+    gap: 1rem;
+    margin: 1.5rem 0;
+}
+
+.pin-dot {
+    width: 15px;
+    height: 15px;
+    background-color: var(--success);
+    border-radius: 50%;
+    transition: background-color 0.2s;
+    border: 1px solid var(--text-muted);
+}
+
+.pin-dot {
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    border: 1px solid #888; /* Muted border */
+    
+    /* 🛑 FIX 1: Make the default background transparent or dark */
+    background-color: transparent; 
+    
+    transition: background-color 0.2s;
+}
+
+.pin-dot.filled {
+    /* ✅ FIX 2: Only turn Green (or Gold) when filled */
+    background-color: var(--success); /* Or use var(--accent) for gold */
+    border-color: var(--success);
+}
+
+.day-button:disabled,
+.day-button.disabled-day {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background-color: #1a1a1a; /* Darker background */
+    border-color: #333;
+    color: #666;
+}
+
+.hidden-pin-input {
+    /* Hide the actual input field but keep it focused for keyboard entry */
+    position: absolute;
+    top: -9999px; 
+    opacity: 0;
+}
+
+.pin-dot.filled { /* Assuming your JavaScript adds a 'filled' class */
+  background-color: var(--success); /* Use your accent color to make it stand out */
+}
+
+.keypad {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.5rem;
+    width: 100%;
+    max-width: 300px;
+}
+
+.keypad button {
+    background-color: #242424;
+    color: var(--text-light);
+    border: none;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    font-size: 1.3rem;
+    cursor: pointer;
+    transition: background-color 0.1s;
+    font-weight: 600;
+}
+
+.keypad button:hover {
+    background-color: #333333;
+}
+
+.keypad-action {
+    font-size: 1.1rem !important;
+}
+
+#login-submit {
+    background-color: var(--accent);
+    color: var(--bg);
+}
+
+#login-submit:hover {
+    background-color: var(--bg);
+}
+
+
+
+
+/* Media Query Adjustment */
+@media (max-width: 768px) {
+    .admin-dashboard-grid {
+        grid-template-columns: 1fr; 
+    }
+    .pin-entry-card {
+        grid-column: 1 / 2; 
+    }
+    .bookings-list-card {
+        grid-column: 1 / 2;
+    }
+}
+
+
+@media (max-width: 768px) {
+    .admin-dashboard-grid {
+        grid-template-columns: 1fr; /* Stack all cards on small screens */
+    }
+}
+
+/* ADMIN STYLING FROM HERE:
+
+/* ROOT COLORS */
+:root {
+  --bg: #141414; /* Very dark background */
+  --card-bg: #1a1a1a; /* Dark card background */
+  --accent: #828282; 
+  --text-light: #f5f5f5;
+  --text-muted: #888888;
+  --text-header: #ffffff;
+  --success: #5dc141ac; 
+}
+
+
+h1, h2, h3,
+.elite-title,
+.elite-section-title {
+  font-family: "Orbitron", sans-serif;
+}
+
+p {
+  font-family: "Poppins", sans-serif;
+ 
+}
+
+
+/* GRID */
+.elite-grid {
+  max-width: 1150px;
+  max-height: 95vh;
+  width: 100%;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.8rem;
+  padding: 1.5rem;
+}
+
+@media (max-width: 850px) {
+  .elite-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* CARDS */
+.elite-card {
+  background: rgba(255,255,255,0.05);
+  border-radius: 14px;
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--border);
+  padding: 1.4rem 1.6rem;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+  transition: .25s ease;
+}
+
+.elite-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px rgba(0,0,0,0.45);
+}
+
+/* HEADER */
+.elite-top {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.elite-logo {
+  width: 52px; /* smaller */
+  height: auto;
+  border-radius: 6px;
+  filter: brightness(0) invert(1);
+}
+
+/* TITLES */
+.elite-title {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: var(--text-header);
+}
+
+.elite-sub {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  font-family: Poppins, sans-serif !important;
+}
+
+/* BUTTONS */
+.elite-cta {
+  background: linear-gradient(135deg, #444, #222);
+  color: var(--accent);
+  padding: 0.6rem 1.2rem;
+  border-radius: 12px;
+  font-weight: 600;
+  border: 1px solid var(--accent);
+  cursor: pointer;
+  transition: .2s ease;
+  font-family: "Orbitron", sans-serif;
+  margin: 5px;
+ }
+
+.elite-cta:hover {
+  background: var(--accent);
+  color: #fff;
+  box-shadow: 0 0 15px var(--accent);
+}
+
+.elite-toggle-group {
+  display: flex;
+  background: #111;
+  padding: 4px;
+  border-radius: 12px;
+  border: 1px solid #333;
+}
+
+.elite-toggle {
+  background: transparent;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 8px;
+  color: #888;
+  font-size: 0.8rem;
+  font-family: "Orbitron", sans-serif;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin: 5px
+
+}
+
+.elite-toggle.active {
+  background: var(--accent);
+  color: #000;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+}
+
+/* BOOKINGS SCROLL */
+.elite-scroll {
+  height: 60vh;
+  max-height: 60vh;
+  overflow-y: auto;
+  padding-right: 10px;
+}
+
+.elite-scroll::-webkit-scrollbar {
+  width: 8px;
+}
+
+.elite-scroll::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+}
+
+.elite-scroll::-webkit-scrollbar-thumb {
+  background: var(--accent);
+  border-radius: 10px;
+  border: 1px solid var(--card-bg);
+}
+
+.elite-scroll::-webkit-scrollbar-thumb:hover {
+  background: #fff; 
+}
+
+/* SECONDARY BUTTON */
+.elite-secondary {
+  margin-top: 1.2rem;
+  padding: 0.55rem 1.2rem;
+  border-radius: 12px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid var(--border);
+  color: var(--text-light);
+  cursor: pointer;
+ font-family: "Poppins", sans-serif;
+}
+
+.elite-secondary:hover {
+  background: rgba(255,255,255,0.12);
+  color: var(--accent);
+}
+
+/* SECTION TITLE */
+.elite-section-title {
+  color: var(--accent);
+  font-size: 1.2rem;
+  margin-bottom: .8rem;
+  font-weight: 600;
+}
+
+.assignLabel {
+  font-size: 0.7rem;
+}
+
+/* Add this to your CSS */
+.elite-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw; /* Use vw to ensure full screen width */
+  height: 100vh; /* Use vh to ensure full screen height */
+  background-color: rgba(0, 0, 0, 0.8); /* Dark overlay */
+  display: flex;
+  justify-content: center; /* Center the form horizontally */
+  align-items: center; /* Center the form vertically */
+  z-index: 9000;
+  /* Make sure overflow is managed if the content is too tall */
+  overflow: auto; 
+}
+
+.elite-modal-content {
+  background: var(--card-bg);
+  padding: 2rem;
+  border-radius: 12px;
+  max-width: 90%; /* Constrain width relative to viewport */
+  width: 400px; /* Set a comfortable fixed width */
+}
+
+input, select {
+  background-color: #2a2a2a !important;
+  border: 1px solid #444 !important;
+  color: var(--text-light) !important;
+  font-family: "Poppins", sans-serif;
+  padding: 12px 16px;
+  border-radius: 8px;
+  outline: none;
+  transition: all 0.3s ease;
+  margin: 5px;
+}
+
+input:focus, select:focus {
+  border-color: var(--accent) !important;
+  box-shadow: 0 0 10px rgba(130, 130, 130, 0.2);
+}
+
+input[type="datetime-local"] {
+  color-scheme: dark;
+  cursor: pointer;
+  background-color: #2a2a2a;
+    color: #fff;
+    border: 1px solid #444;
+}
+
+#custom-alert-modal {
+  position: fixed;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(5px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 99999 !important;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3 ease;
+}
+
+#custom-alert-modal.visible {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.alert-box {
+  background: #1a1a1a;
+  border: 1px solid var(--accent);
+  padding: 2rem;
+  border-radius: 12px;
+  text-align: center;
+  max-width: 400px;
+  box-shadow: 0 0 30px rgba(0,0,0,0.8);
+  transform: scale(0.9);
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+#custom-alert-modal.visible .alert-box {
+  transform: scale(1);
+}
+
+.alert-message {
+  font-family: "Poppins", sans-serif;
+  color: #fff;
+  margin-bottom: 1.5rem;
+  font-size: 1.1rem;
+}
+
+.alert-btn {
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  padding: 10px 24px;
+  border-radius: 6px;
+  font-family: "Orbitron", sans-serif;
+  cursor: pointer;
+  text-transform: uppercase;
+}
+
+.error-message {
+  color: #e53935;      /* Tesla Red */
+  font-size: 0.9rem;
+  min-height: 1.5rem;  /* Reserve space so layout doesn't jump */
+  margin-top: 1rem;
+  text-align: center;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.booking-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.2rem 0;
+  border-bottom: 1px solid #333;
+  transition: background 0.2s;
+}
+
+.booking-item:hover {
+ background: rgba(255,255,255,0.02);
+}
+
+.booking-time {
+ font-family: "Orbitron", sans-serif;
+ font-size: 0.9rem;
+ color: var(--accent);
+ font-weight: 700;
+ min-width: 80px;
+}
+
+.booking-details {
+  flex-grow: 1;
+  padding: 0 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.booking-client {
+  font-family: "Poppins", sans-serif;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 4px;
+}
+
+.booking-service {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.booking-status {
+  font-size: 0.75rem;
+  margin-top: 4px;
+  color: #666;
+}
+
+/* --- BOOKING ACTION BUTTONS (Consolidated) --- */
+
+/* Container Grid */
+.booking-actions {
+display: grid;
+    grid-template-columns: 1fr 1fr; /* Two equal columns for top buttons */
+    gap: 8px; 
+    align-items: center; /* 👈 Prevents vertical stretching! */
+    min-width: 140px;
+}
+
+/* 2. Base Button Style */
+.action-btn {
+padding: 6px 10px; /* Smaller padding */
+    height: auto;      /* 👈 Stop stretching height */
+    border-radius: 6px;
+    font-family: "Orbitron", sans-serif;
+    font-size: 0.65rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    background: transparent;
+}
+
+.action-btn:hover {
+    transform: translateY(-2px);
+    filter: brightness(1.2);
+}
+
+/* 3. Check-In Button (Top Left) */
+.confirm-btn {
+    grid-column: 1 / 2; /* Takes 1 slot */
+    background: linear-gradient(135deg, #1e3c1e, #2e5c2e);
+    border: 1px solid #4caf50;
+    color: #4caf50;
+}
+
+/* 4. No-Show Button (Top Right) */
+.no-show-btn {
+   grid-column: 2 / 3; /* Takes 1 slot */
+    background: linear-gradient(135deg, #3c2e1e, #5c462e);
+    border: 1px solid #ff9800;
+    color: #ff9800;
+}
+
+/* 5. Cancel Button (Bottom - Full Width) */
+.cancel-btn {
+    grid-column: 1 / -1; /* 👈 THIS IS THE KEY: Spans all columns */
+    width: 100%;
+    
+    background: linear-gradient(135deg, #3c1e1e, #5c2e2e);
+    border: 1px solid #f44336;
+    color: #f44336;
+    
+    margin-top: 2px;
+    opacity: 0.7;
+}
+
+.cancel-btn:hover {
+    opacity: 1;
+    background: #f44336;
+    color: #fff;
+}
+/* --- RESPONSIVE SAFETY: TABLETS & SMALL SCREENS --- */
+/* Applies to screens narrower than 1100px (Most iPads/Tablets) OR shorter than 800px */
+@media (max-width: 900px), (max-height: 600px) {
+    
+    /* 1. Unlock the main window scrolling */
+    body {
+        overflow-y: auto !important; /* Force scrollbar if needed */
+        height: auto !important;
+    }
+
+    /* 2. Let the wrapper grow naturally */
+    .admin-dashboard-wrapper {
+        height: auto !important;
+        min-height: 100vh;
+        padding: 20px;
+        display: block; /* Remove centering flexbox to allow scrolling flow */
+    }
+
+    /* 3. Stack the layout (Left Panel on top, List on bottom) */
+    .elite-grid {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+        max-height: none; /* Remove height restriction */
+    }
+
+    /* 4. Ensure the booking list card has a reasonable height */
+    .bookings-list-card {
+        min-height: 500px; /* Give it plenty of space */
+    }
+
+    /* 5. Adjust Header for smaller width */
+    .elite-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+    
+    .elite-controls {
+        width: 100%;
+        justify-content: space-between;
+    }
+}

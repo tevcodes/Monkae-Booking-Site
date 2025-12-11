@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/ico" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Monkae | Effortless Bookings</title>
+   
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <main class="booking-page">
+      
+      <section class="card header-card">
+        <img src="" id="dynamic-logo" class="admin-logo" alt="Salon Logo">
+       
+        <p class="subtitle">Choose your service and book instantly.</p>
+        </section>
+
+      <form id="booking-form">
+        <section class="card">
+          <h3>Services</h3>
+          <div class="services-grid" id="services-container">
+            </div>
+          <input type="hidden" name="service" required>
+        </section>
+
+        <section class="card">
+          <h3>Choose Date & Time</h3>
+          <div class="time-selection">
+            <div class="day-selector" id="day-selector">
+              </div>
+            
+            <div class="time-slots-grid" id="time-slots-container">
+              </div>
+          </div>
+          <input type="hidden" name="time" required>
+        </section>
+
+        <section class="card final-step-card" id="final-step" style="display:none;">
+            <h3>Your Details</h3>
+            <label for="name-input"></label>
+            <input type="text" id="name-input" name="name" placeholder="Enter your name" required>
+            
+            <input type="tel" id="phone-input" name="phone" placeholder="WhatsApp / Phone Number" required 
+            style="background-color: #242424; color: #f5f5f5; border: 1px solid #333; padding: 0.75rem 1rem; border-radius: 0.5rem; outline: none; font-size: 1rem;"> 
+            
+            <label for="email-input"></label>
+            <input type="email" id="email-input" name="email" placeholder="Enter your Email address" required>
+
+            <label>Choose Hairdresser</label>
+            <select id="staff-select" name="staff" required>
+            </select>
+
+            <div class="privacy-consent">
+            <input type="checkbox" id="privacy-check" required>
+            <label for="privacy-check">I agree to the <a href="privacy.html" target="_blank">Privacy Policy</a> and consent to be contacted via Email regarding my booking.</label>
+            </div>
+            <button type="submit" class="cta-button">Book Appointment</button>
+        </section>
+
+       <div id="success-modal" class="modal-overlay" style="display:none;">
+    <section class="card success-card">
+       <button id="close-modal-btn" class="close-modal-btn">&times;</button> 
+        <p>Your booking request has been sent.</p>
+        <div class="whatsapp-icon material-symbols-outlined">chat</div>
+        <p>We will confirm shortly.</p>
+     <button id="book-another-btn" class="cta-button">Book Another Appointment</button>
+        <button id="done-btn" class="secondary-btn">Close</button>
+    </section>
+</div>
+
+        </form>
+    </main>
+
+  
+    <script type="module" src="./src/main.js"></script>
+      <div id="custom-alert-modal">
+    <div class="alert-box">
+        <h3 style="color: var(--accent); margin-bottom: 10px;">NOTIFICATION</h3>
+        <p id="custom-alert-message" class="alert-message"></p>
+        <button id="custom-alert-ok" class="alert-btn">OK</button>
+    </div>
+</div>
+  </body>
+</html>

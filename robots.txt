@@ -1,0 +1,12 @@
+Block all automated bots (User-agent: *)
+
+User-agent: *
+
+Disallow access to the Admin portal
+
+Disallow: /admin.html
+
+Disallow access to any dynamic URLs or system folders
+
+Disallow: /src/
+Disallow: /functions/
