@@ -4,7 +4,7 @@ import { collection, addDoc, serverTimestamp, query, getDocs, where, doc, getDoc
 import { services, staffMembers } from "./services.js";
 import { getSalonId } from "./utils.js";
 
-// --- DOM ELEMENTS ---
+
 const form = document.getElementById("booking-form");
 const servicesContainer = document.getElementById("services-container");
 const daySelector = document.getElementById("day-selector");
@@ -15,9 +15,9 @@ const bookAnotherBtn = document.getElementById("book-another-btn");
 const closeModalBtn = document.getElementById("close-modal-btn"); 
 const doneBtn = document.getElementById("done-btn");
 
-// --- CONFIGURATION ---
+
 const salonId = getSalonId();
-// Removed: console.log("Loading Salon:", salonId); 
+
 
 let currentShopConfig = {
   openHour: 9,
@@ -31,7 +31,7 @@ let currentServicesList = [];
 
 const CLEANUP_BUFFER_MINUTES = 15;
 
-// --- CUSTOM ALERT HELPER ---
+
 function showEliteAlert(message) {
     const modal = document.getElementById('custom-alert-modal');
     const msg = document.getElementById('custom-alert-message');
@@ -48,12 +48,12 @@ function showEliteAlert(message) {
             body.classList.remove('modal-open');
         };
     } else {
-        // Fallback to standard alert if DOM is missing (Prevents infinite loop crash)
+     
         alert(message);
     }
 }
 
-// --- DATA LOADING ---
+
 async function loadSalonData() {
     try {
         const docRef = doc(db, "salons", salonId); 
@@ -74,7 +74,7 @@ async function loadSalonData() {
             }
         }
     } catch (error) {
-        // Keep actual errors for debugging, but remove warnings
+    
         console.error("Data Load Error:", error);
     }
     return null; 
@@ -98,12 +98,12 @@ const getTimeSlots = async (dateString, requiredDurationMinutes) => {
             const slotTime = new Date(date);
             slotTime.setHours(h, m, 0, 0);
 
-            // Skip past times
+      
             if (slotTime < new Date() && slotTime.toISOString().split('T')[0] === new Date().toISOString().split('T')[0]) {
                 continue;
             }
             
-            // Skip if service finishes after closing
+       
             if (slotTime.getTime() + requiredDurationMinutes * 60000 > new Date(date).setHours(endHour, 0, 0, 0)) {
                 continue;
             }
@@ -128,7 +128,6 @@ const getTimeSlots = async (dateString, requiredDurationMinutes) => {
     const snapshot = await getDocs(q);
     const existingBookings = snapshot.docs.map(doc => doc.data()); 
 
-    // --- Filtering with Overlap Logic ---
     const availableSlots = allPotentialSlots.filter(potentialSlot => {
         const slotStartTime = potentialSlot.getTime(); 
         const slotEndTime = slotStartTime + requiredDurationMinutes * 60000; 
@@ -161,7 +160,7 @@ const getFutureDays = (count = 6) => {
     return days;
 };
 
-// --- UI HELPERS ---
+
 
 function resetBookingUI() {
   successModal.style.display = 'none';
@@ -297,7 +296,7 @@ function selectTime(button) {
 }
 
 
-// --- FORM SUBMISSION ---
+
 
 form.addEventListener("submit", async (e) => {
     e.preventDefault();
@@ -305,21 +304,17 @@ form.addEventListener("submit", async (e) => {
     const name = form.name.value;
     const email = form.email.value;
     const phone = form.phone.value;
-    // Removed privacy check variable if unused, or keep if needed later
     const service = form.service.value;
     const staff = form.staff.value;
     const time = form.time.value;
 
     if (!name || !email || !phone || !service || !time || !staff) {
-        // CHANGED: alert -> showEliteAlert
         showEliteAlert("Please complete all steps: select service, time, and enter your name and email.");
         return;
     }
 
     if (!salonId) {
-        // Kept console.error for developer debugging, but User gets EliteAlert
         console.error("CRITICAL ERROR: Salon ID is missing!"); 
-        // CHANGED: alert -> showEliteAlert
         showEliteAlert("System Error: Missing Salon ID. Please contact support.");
         return;
     }
@@ -354,7 +349,7 @@ form.addEventListener("submit", async (e) => {
     }
 });
 
-// --- EVENT LISTENERS (UI) ---
+
 
 bookAnotherBtn.addEventListener('click', () => {
   resetBookingUI();
@@ -385,7 +380,7 @@ function populateStaff(staffList) {
   });
 }
 
-// --- INITIALIZATION ---
+
 
 async function initApp() {
     const salonData = await loadSalonData();
@@ -397,7 +392,6 @@ async function initApp() {
         renderServices(currentServicesList);
         populateStaff(salonData.staff);
        } else {
-        // Removed: console.warn("Using local fallback");
         currentServicesList = services;
         renderServices(currentServicesList);
         populateStaff(staffMembers);

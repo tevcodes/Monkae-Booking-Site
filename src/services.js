@@ -1,4 +1,4 @@
-// src/services.js (Update the data structure)
+// src/services.js (Update the data structure) pre production
 export const services = [
   { id: 'wash-blow', name: 'Wash & Blow', icon: 'dry', duration: 30, price: 35.00, }, // 60 mins
   { id: 'cut', name: 'Cut', icon: 'content_cut', duration: 60, price: 50.00, }, // 30 mins
@@ -12,7 +12,7 @@ export const services = [
 export const shopConfig = {
   openHour: 9,
   closeHour: 17,
-  closedDays: [0, 1], // Example: Closed on Sundays (0) and Mondays (1)
+  closedDays: [0, 1], 
 };
 
 export const staffMembers = ["Mida", "First Time"];

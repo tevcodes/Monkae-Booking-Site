@@ -1,4 +1,4 @@
-# --- LOGS & JUNK ---
+
 logs
 *.log
 npm-debug.log*
@@ -8,16 +8,16 @@ pnpm-debug.log*
 lerna-debug.log*
 firebase-debug.log* # Added this
 
-# --- DEPENDENCIES ---
+
 node_modules/         # Handles root dependencies
 functions/node_modules/ # Added specific safety for functions folder
 
-# --- BUILD OUTPUTS ---
+
 dist
 dist-ssr
 *.local
 
-# --- EDITOR FILES ---
+
 .vscode/*
 !.vscode/extensions.json
 .idea
@@ -28,16 +28,16 @@ dist-ssr
 *.sln
 *.sw?
 
-# --- 🚨 SECURITY & SECRETS (CRITICAL) ---
+
 .env
 .env.local
 .env.*.local
 
-# 1. Firebase Local Config (Contains API Keys for testing functions)
+
 .runtimeconfig.json 
 
-# 2. Firebase Cache (Contains build artifacts)
+
 .firebase/
 
-# 3. Firebase Project Aliases (Optional: Keep this private if you want)
+
 .firebaserc

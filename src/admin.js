@@ -8,12 +8,12 @@ import {
 import { signInWithEmailAndPassword, onAuthStateChanged, signOut } from "firebase/auth"; 
 import { httpsCallable } from "firebase/functions";
 
-// Fallback data
+
 import { services, shopConfig, staffMembers } from "./services.js"; 
 import alertSound from "./assets/synthetic-ping-sound.mp3";
 import { getSalonId } from "./utils.js"; 
 
-// --- GLOBAL VARIABLES ---
+
 const salonId = getSalonId(); 
 console.log("Admin Dashboard loading for Salon:", salonId);
 
@@ -25,13 +25,13 @@ const ADMIN_EMAIL = "info@monkae.co.za";
 const CLEANUP_BUFFER_MINUTES = 15; 
 const BOOKING_ALERT_SOUND = alertSound;
 
-// State Flags
+
 let currentPin = "";
 let currentView = 'today'; 
 let isInitialLoad = true;
-let editingBookingId = null; // 👈 NEW: Tracks if we are editing
+let editingBookingId = null; 
 
-// --- DOM ELEMENTS ---
+
 const list = document.getElementById("bookings-list");
 const pinContainer = document.getElementById("pin-container");
 const dashboardContainer = document.getElementById("dashboard-container");
@@ -42,7 +42,7 @@ const viewFutureBtn = document.getElementById("view-future-btn");
 const viewTodayBtn = document.getElementById("view-today-btn");
 const currentViewTitle = document.getElementById("current-view-title");
 
-// Modal Elements
+
 const manualBookingModal = document.getElementById("manual-booking-modal");
 const manualBookingForm = document.getElementById("manual-booking-form"); 
 const addManualBookingBtn = document.getElementById("add-manual-booking-btn");
@@ -50,18 +50,18 @@ const closeManualModalBtn = document.getElementById("close-manual-modal");
 const modalTitle = document.getElementById("modal-title");
 const modalSubmitBtn = document.getElementById("modal-submit-btn");
 
-// Confirm Modal Elements
+
 const confirmModal = document.getElementById("confirm-modal");
 const confirmMsg = document.getElementById("confirm-message");
 const confirmYes = document.getElementById("confirm-yes-btn");
 const confirmNo = document.getElementById("confirm-no-btn");
 
-// Report Elements
+
 const reportForm = document.getElementById("report-form");
 const reportBtn = document.getElementById("generate-report-btn");
 const reportStatus = document.getElementById("report-status");
 
-// --- 1. DATA LOADER ---
+
 async function loadAdminData() {
     try {
         const docRef = doc(db, "salons", salonId);
@@ -85,7 +85,7 @@ async function loadAdminData() {
     return null; 
 }
 
-// --- CUSTOM ALERTS & CONFIRMS ---
+
 function showEliteAlert(message) {
     const modal = document.getElementById('custom-alert-modal');
     const msg = document.getElementById('custom-alert-message');
@@ -93,7 +93,7 @@ function showEliteAlert(message) {
     
     if (modal) {
         msg.textContent = message;
-        modal.style.display = 'flex'; // Use flex to center
+        modal.style.display = 'flex'; 
         btn.onclick = () => { modal.style.display = 'none'; };
     } else {
         alert(message);
@@ -106,7 +106,7 @@ function showEliteConfirm(message, onConfirm) {
         confirmMsg.textContent = message;
         confirmModal.style.display = 'flex';
         
-        // Remove old listeners to prevent stacking
+    
         const newYes = confirmYes.cloneNode(true);
         const newNo = confirmNo.cloneNode(true);
         confirmYes.parentNode.replaceChild(newYes, confirmYes);
@@ -114,19 +114,19 @@ function showEliteConfirm(message, onConfirm) {
 
         newYes.addEventListener('click', () => {
             confirmModal.style.display = 'none';
-            onConfirm(); // Run the action
+            onConfirm(); 
         });
 
         newNo.addEventListener('click', () => {
             confirmModal.style.display = 'none';
         });
     } else {
-        // Fallback if HTML missing
+   
         if (confirm(message)) onConfirm();
     }
 }
 
-// --- LOGIN LOGIC ---
+
 function updatePinDisplay() {
     const pinDots = document.querySelectorAll('.pin-dot');
     if(errorMsg) errorMsg.style.display = 'none';
@@ -173,7 +173,7 @@ async function attemptLogin(inputPin) {
     }
 }
 
-// Keypad Listener
+
 if (keypad) {
     keypad.addEventListener('click', (e) => {
         const key = e.target.dataset.key;
@@ -193,7 +193,7 @@ if (keypad) {
 if (logoutBtn) logoutBtn.addEventListener('click', async () => await signOut(auth));
 
 
-// --- MANUAL BOOKING & EDIT LOGIC ---
+
 function populateServiceSelect(selectedValue = "") {
     const serviceSelect = document.getElementById("manual-service-select");
     serviceSelect.innerHTML = '<option value="" disabled selected>Select Service</option>';
@@ -219,23 +219,23 @@ function populateStaffSelect(selectedValue = "") {
     });
 }
 
-// ✅ NEW: Open Modal for Editing
+
 function openEditModal(bookingData, id) {
-    editingBookingId = id; // Set global flag
+    editingBookingId = id; 
     
-    // UI Updates
+
     modalTitle.textContent = "Edit Booking";
     modalSubmitBtn.textContent = "Save Changes";
     manualBookingModal.style.display = 'flex';
 
-    // Populate Form
+ 
     manualBookingForm.name.value = bookingData.name;
     manualBookingForm.email.value = bookingData.email;
     manualBookingForm.phone.value = bookingData.phone || "";
     
-    // Handle Date/Time Format for Input
+ 
     const dateObj = new Date(bookingData.time);
-    // Format to "YYYY-MM-DDTHH:MM" for datetime-local input
+
     const isoString = new Date(dateObj.getTime() - (dateObj.getTimezoneOffset() * 60000)).toISOString().slice(0, 16);
     manualBookingForm.timeValue.value = isoString;
 
@@ -245,7 +245,7 @@ function openEditModal(bookingData, id) {
 
 if (addManualBookingBtn) {
     addManualBookingBtn.addEventListener('click', () => {
-        editingBookingId = null; // Clear flag
+        editingBookingId = null; 
         modalTitle.textContent = "New Booking";
         modalSubmitBtn.textContent = "Confirm Booking";
         manualBookingModal.style.display = 'flex';
@@ -263,7 +263,7 @@ if (closeManualModalBtn) {
     });
 }
 
-// ✅ UPDATED: Handle Submit (Create OR Update)
+
 if (manualBookingForm) {
     manualBookingForm.addEventListener('submit', async (e) => {
         e.preventDefault();
@@ -280,7 +280,7 @@ if (manualBookingForm) {
             return;
         }
 
-        // --- CONFLICT CHECK ---
+      
         const timeToCheck = new Date(timeValue);
         const serviceObject = currentServicesList.find(s => s.name === service);
         if (!serviceObject) { showEliteAlert("Service error."); return; }
@@ -299,7 +299,7 @@ if (manualBookingForm) {
         );
 
         const snapshot = await getDocs(q);
-        // ✅ NEW: Exclude the booking we are currently editing from the conflict check
+       
         const existingBookings = snapshot.docs
             .map(doc => ({ ...doc.data(), id: doc.id }))
             .filter(b => b.id !== editingBookingId); 
@@ -322,7 +322,7 @@ if (manualBookingForm) {
     
         try {
             if (editingBookingId) {
-                // ✅ UPDATE MODE
+              
                 const bookingRef = doc(db, "salons", salonId, "bookings", editingBookingId);
                 await updateDoc(bookingRef, {
                     name, email, phone, service, staffMember: staff,
@@ -330,7 +330,7 @@ if (manualBookingForm) {
                 });
                 showEliteAlert("Booking updated successfully.");
             } else {
-                // ✅ CREATE MODE
+           
                 await addDoc(collection(db, "salons", salonId, "bookings"), {
                     name, email, phone, service, staffMember: staff,
                     time: new Date(timeValue).toISOString(), 
@@ -352,7 +352,7 @@ if (manualBookingForm) {
     });
 }
 
-// --- REPORTS LOGIC ---
+
 async function checkReportAvailability() {
     if (!reportBtn) return; 
     const today = new Date();
@@ -404,7 +404,7 @@ if (reportForm) {
     });
 }
 
-// --- DASHBOARD LISTENER ---
+
 function toggleView(view) {
     currentView = view;
     if (currentView === 'today') {
@@ -423,14 +423,14 @@ function toggleView(view) {
 if (viewTodayBtn) viewTodayBtn.addEventListener('click', () => toggleView('today'));
 if (viewFutureBtn) viewFutureBtn.addEventListener('click', () => toggleView('future'));
 
-// --- MAIN BOOKING LISTENER ---
+
 function startBookingListener() {
-    // Determine Time Range
+
     const today = new Date();
     today.setHours(0,0,0,0);
     const startOfToday = today.toISOString();
     
-    // For "Future", we start from tomorrow
+
     const tomorrow = new Date(today);
     tomorrow.setDate(tomorrow.getDate() + 1);
     const startOfTomorrow = tomorrow.toISOString();
@@ -447,15 +447,15 @@ function startBookingListener() {
     const updateBookingStatus = async (bookingId, newStatus) => {
         const bookingRef = doc(db, "salons", salonId, "bookings", bookingId);
         
-        // ✅ NEW: Use Custom Confirm for Cancellation
+   
         if (newStatus === 'Cancelled') {
             showEliteConfirm("Are you sure you want to CANCEL this booking?", async () => {
                 await updateDoc(bookingRef, { status: 'Cancelled' });
             });
-            return; // Exit, because the actual update happens inside the callback
+            return; 
         }
 
-        // Standard updates (Check-in, No-Show) happen immediately
+   
         let updateData = { status: newStatus };
         if (newStatus === 'Completed') updateData.completedAt = serverTimestamp();
         await updateDoc(bookingRef, updateData);
@@ -521,7 +521,7 @@ function startBookingListener() {
             li.querySelector('.no-show-btn').addEventListener('click', () => updateBookingStatus(bookingId, 'No-Show'));
             li.querySelector('.cancel-btn').addEventListener('click', () => updateBookingStatus(bookingId, 'Cancelled'));
             
-            // ✅ NEW: Edit Listener
+       
             li.querySelector('.edit-btn').addEventListener('click', () => openEditModal(data, bookingId));
 
             list.appendChild(li);
@@ -529,7 +529,7 @@ function startBookingListener() {
     });
 }
 
-// 🔑 AUTH OBSERVER
+
 onAuthStateChanged(auth, async (user) => {
     if (user) {
         const salonData = await loadAdminData();
@@ -552,23 +552,21 @@ onAuthStateChanged(auth, async (user) => {
     }
 });
 
-// --- IMMEDIATE INIT ---
-// Run this immediately to load the logo on the PIN screen
 (async function initBranding() {
     if (!salonId) return;
     
-    // Fetch just enough to show the logo
+
     try {
         const docRef = doc(db, "salons", salonId);
         const docSnap = await getDoc(docRef);
 
         if (docSnap.exists()) {
             const data = docSnap.data();
-            // Inject Logo into all logo slots (Login screen + Dashboard)
+         
             if (data.logoUrl) {
                 document.querySelectorAll(".salon-logo-target").forEach(img => { 
                     img.src = data.logoUrl;
-                    img.style.display = 'block'; // Ensure it's visible
+                    img.style.display = 'block'; 
                 });
             }
         }
