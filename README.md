@@ -11,9 +11,9 @@ Live Admin Dashboard: Utilizes Firestore Snapshot Listeners to instantly reflect
 Concurrency Handling: Prevents double-bookings in real-time by locking slots during the checkout process.
 
 🛠 Backend Automation (Serverless)
-Automated Reporting: Google Cloud Functions generate end-of-day PDF financial reports and email them to store owners automatically.
+Automated Reporting: Google Cloud Functions generate month-to-month PDF financial reports and email them to store owners automatically.
 
-Smart Notifications: Integrated with Twilio to send SMS reminders and confirmations to clients.
+Smart Notifications: Integrated with Twilio to send Email reminders and confirmations to clients.
 
 Cron Jobs: Scheduled functions handle cleanup tasks and daily summary aggregation.
 
