@@ -2,7 +2,7 @@ Monkae | Multi-Tenant SaaS Booking Platform
 
 Monkae is a production-grade, serverless booking platform designed for the beauty and service industry. It creates a seamless link between client-side bookings and admin-side management using real-time data synchronization.
 
-Unlike standard CRUD apps, Monkae handles complex logic like automated PDF financial reporting, SMS notifications via Twilio, and multi-tenant data isolation.
+Unlike standard CRUD apps, Monkae handles complex logic like automated PDF financial reporting,Email notifications via Twilio, and multi-tenant data isolation.
 
 🚀 Key Features
 ⚡ Real-Time Architecture
