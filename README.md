@@ -28,7 +28,7 @@ Frontend	VanillaJS through Vite
 Backend	Firebase (Firestore, Authentication, Hosting)
 Serverless	Google Cloud Functions (Node.js environment)
 Integrations	Twilio (SMS), SendGrid/Nodemailer (Email), PDFKit (Reporting)
-DevOps	GitHub Actions (CI/CD), ESLint
+DevOps: None currently
 
 🔧 Installation & Setup
 This project uses Vite and Firebase Emulators.
