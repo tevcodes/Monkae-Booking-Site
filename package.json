@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "devDependencies": {
+    "cypress": "^15.8.1",
     "vite": "^7.1.7"
   },
   "dependencies": {
