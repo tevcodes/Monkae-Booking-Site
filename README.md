@@ -40,7 +40,7 @@ Firebase CLI (npm install -g firebase-tools)
 1. Clone the repository
 
 
-git clone https://github.com/YOUR_USERNAME/monkae.git
+git clone https://github.com/YOUR_USERNAME/Monkae-Booking-Site.git
 cd monkae
 2. Install dependencies
 
