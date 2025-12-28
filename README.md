@@ -27,8 +27,8 @@ Secure PIN Authentication: Custom auth layer for quick staff access.
 Frontend	VanillaJS through Vite
 Backend	Firebase (Firestore, Authentication, Hosting)
 Serverless	Google Cloud Functions (Node.js environment)
-Integrations	Twilio (SMS), SendGrid/Nodemailer (Email), PDFKit (Reporting)
-DevOps	GitHub Actions (CI/CD), ESLint
+Integrations	Twilio (Email Notifications), SendGrid/Nodemailer (Email), PDFKit (Reporting)
+DevOps: None currently
 
 🔧 Installation & Setup
 This project uses Vite and Firebase Emulators.
