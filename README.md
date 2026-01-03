@@ -37,11 +37,6 @@ Unlike standard CRUD apps, Monkae handles complex logic like automated PDF finan
 
 This project uses Vite and Firebase Emulators.
 
-<<<<<<< HEAD
-### Prerequisites
-* Node.js (LTS)
-* Firebase CLI (`npm install -g firebase-tools`)
-=======
 Prerequisites
 Node.js (LTS)
 Firebase CLI (npm install -g firebase-tools)
@@ -67,7 +62,6 @@ VUE_APP_FIREBASE_PROJECT_ID=your_project_id
 
 
 npm run serve
->>>>>>> 86eb757ef48121c98dc8f806318310ba4795a596
 
 ### 1. Clone the repository
 ```bash
