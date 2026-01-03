@@ -37,9 +37,37 @@ Unlike standard CRUD apps, Monkae handles complex logic like automated PDF finan
 
 This project uses Vite and Firebase Emulators.
 
+<<<<<<< HEAD
 ### Prerequisites
 * Node.js (LTS)
 * Firebase CLI (`npm install -g firebase-tools`)
+=======
+Prerequisites
+Node.js (LTS)
+Firebase CLI (npm install -g firebase-tools)
+
+1. Clone the repository
+
+
+git clone https://github.com/YOUR_USERNAME/Monkae-Booking-Site.git
+cd monkae
+2. Install dependencies
+
+npm install
+3. Configure Environment Variables
+Create a .env file in the root directory. You will need API keys for Firebase and Twilio.
+
+
+
+VUE_APP_FIREBASE_API_KEY=your_key_here
+VUE_APP_FIREBASE_AUTH_DOMAIN=your_project.firebaseapp.com
+VUE_APP_FIREBASE_PROJECT_ID=your_project_id
+...
+4. Run Locally
+
+
+npm run serve
+>>>>>>> 86eb757ef48121c98dc8f806318310ba4795a596
 
 ### 1. Clone the repository
 ```bash
